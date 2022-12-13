@@ -1,11 +1,7 @@
 package com.example.boringLibrary.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.boringLibrary.model.Book;
 import com.example.boringLibrary.model.Users;
@@ -22,13 +18,14 @@ public class BookController{
     @Autowired 
     private UserRepo userRepo;
 
+    @CrossOrigin
     @GetMapping("/users/{id}")
     public Iterable<Book> getBooks(@PathVariable int id){
         Users user = userRepo.findById(id).get();
         return user.getBooks();
     }
 
-    //Fix this!!
+    @CrossOrigin
     @PostMapping("/users/{id}")
     public Iterable<Book> addFavourite(@PathVariable int id, @RequestBody Book newBook){
 

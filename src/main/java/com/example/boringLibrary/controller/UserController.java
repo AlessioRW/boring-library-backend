@@ -2,10 +2,7 @@ package com.example.boringLibrary.controller;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.boringLibrary.model.Users;
 import com.example.boringLibrary.repositories.BookRepo;
@@ -20,12 +17,13 @@ public class UserController{
     @Autowired
     private UserRepo userRepo;
 
-
+    @CrossOrigin
     @GetMapping("/account")
     public Iterable<Users> getUsers(){
         return userRepo.findAll();
     }
 
+    @CrossOrigin
     @PostMapping("/account/create")
     public int addUser(@RequestBody Users newUser){ //return the id of the new user
         boolean userExists = false;
@@ -47,6 +45,7 @@ public class UserController{
 
     }
 
+    @CrossOrigin
     @PostMapping("/account/login")
     public int login(@RequestBody Users loginUser){
         Iterator<Users> allUsers = userRepo.findAll().iterator();
