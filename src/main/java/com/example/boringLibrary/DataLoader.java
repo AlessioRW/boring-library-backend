@@ -37,7 +37,7 @@ public class DataLoader implements ApplicationRunner {
         con.setRequestProperty("Accept", "application/json");
         con.setDoOutput(true);
 
-        String jsonInputString = "{\"id\": \"1\", \"title\": \"book1\", \"author\": \"author1\"}";
+        String jsonInputString = "{\"id\": \"1\", \"title\": \"The Very Hungry Caterpillar\", \"author\": \"God\"}";
         try(OutputStream os = con.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
             os.write(input, 0, input.length);			
