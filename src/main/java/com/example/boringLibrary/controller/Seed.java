@@ -21,17 +21,6 @@ public class Seed{
     @GetMapping("/seed")
     public String seedValues(){
 
-        Users user1 = new Users("Abraham Lincoln", "password123");
-        userRepo.save(user1);
-
-        Users user2 = new Users("John Doe", "securePassword");
-        userRepo.save(user2);
-
-        Users user3 = new Users("Jane Smith", "password_test");
-        userRepo.save(user3);
-
-        Users user4 = new Users("Alice Oseman", "password");
-        userRepo.save(user4);
 
         Book book1 = new Book("1","david", "My last book on seeing live plays");
         bookRepo.save(book1);
@@ -44,6 +33,26 @@ public class Seed{
 
         Book book4 = new Book("4","Abraham Lincoln", "The history of making up book titles");
         bookRepo.save(book4);
+
+
+        Users user1 = new Users("Abraham Lincoln", "password123");
+        userRepo.save(user1);
+
+        Users newuser1 = userRepo.findById(1).get();
+        if (newuser1 != null){
+            Book newBook = bookRepo.findById("4").get();        
+            newuser1.addBook(newBook);
+            userRepo.save(newuser1);
+        }else{
+            System.out.println(newuser1);
+        }
+        
+
+        Users user3 = new Users("Jane Smith", "password_test");
+        // user3.addBook(bookRepo.findById("4").get());
+        // user3.addBook(bookRepo.findById("3").get());
+        userRepo.save(user3);
+        
         
         return "database seeded";
     }
