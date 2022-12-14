@@ -2,6 +2,7 @@ package com.example.boringLibrary.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +41,17 @@ public class BookController{
         bookRepo.save(newBook);
 
         user.addBook(newBook);
+        userRepo.save(user);
+
+        return user.getBooks();
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/users/{userId}/{bookId}")
+    public Iterable<Book> removeFavourite(@PathVariable int userId, @PathVariable String bookId){
+
+        Users user = userRepo.findById(userId).get();
+        user.removeBook(bookId);
         userRepo.save(user);
 
         return user.getBooks();

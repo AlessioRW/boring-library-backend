@@ -1,5 +1,6 @@
 package com.example.boringLibrary.model;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -60,6 +61,15 @@ public class Users {
     }
     public void addBook(Book newBook){
         this.books.add(newBook);
+    }
+    public void removeBook(String id){
+        Iterator<Book> bookIterator = this.books.iterator();
+        while (bookIterator.hasNext()){
+            Book curBook = bookIterator.next();
+            if (id.equals(curBook.getId())){
+                this.books.remove(curBook);
+            }
+        }
     }
     public Set<Book> getBooks() {
         return this.books;
