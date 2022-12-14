@@ -2,7 +2,11 @@ package com.example.boringLibrary.controller;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.boringLibrary.model.Users;
 import com.example.boringLibrary.repositories.BookRepo;
@@ -53,7 +57,7 @@ public class UserController{
 
         while (allUsers.hasNext()){
             Users currentUser = allUsers.next();
-            if (currentUser.getUsername() == loginUser.getUsername() && currentUser.getPassword() == loginUser.getPassword()){
+            if (currentUser.getUsername().equals(loginUser.getUsername()) && currentUser.getPassword().equals(loginUser.getPassword())){
                 return currentUser.getId(); //return the id of the account 
             }
         }
