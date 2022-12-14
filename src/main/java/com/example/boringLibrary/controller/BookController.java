@@ -1,5 +1,7 @@
 package com.example.boringLibrary.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,8 @@ public class BookController{
     public BookController() {
     }
 
+    private static Collection<Book> emptyBooks; //use if id is invalid, becuase react conditions are dumb
+
     @Autowired 
     private BookRepo bookRepo;
 
@@ -30,6 +34,11 @@ public class BookController{
     @CrossOrigin
     @GetMapping("/users/{id}")
     public Iterable<Book> getBooks(@PathVariable int id){
+
+        if (id == -1){
+            return emptyBooks;
+        }
+
         Users user = userRepo.findById(id).get();
         return user.getBooks();
     }
@@ -37,6 +46,10 @@ public class BookController{
     @CrossOrigin
     @PostMapping("/users/{id}")
     public Iterable<Book> addFavourite(@PathVariable int id, @RequestBody Book newBook){
+
+        if (id == -1){
+            return emptyBooks;
+        }
 
         Users user = userRepo.findById(id).get();
         bookRepo.save(newBook);
