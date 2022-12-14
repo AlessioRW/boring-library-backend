@@ -68,6 +68,7 @@ public class Users {
             Book curBook = bookIterator.next();
             if (id.equals(curBook.getId())){
                 this.books.remove(curBook);
+                return;
             }
         }
     }

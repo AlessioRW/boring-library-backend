@@ -15,6 +15,7 @@ import com.example.boringLibrary.repositories.BookRepo;
 import com.example.boringLibrary.repositories.UserRepo;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class BookController{
     
     public BookController() {
@@ -46,7 +47,6 @@ public class BookController{
         return user.getBooks();
     }
 
-    @CrossOrigin
     @DeleteMapping("/users/{userId}/{bookId}")
     public Iterable<Book> removeFavourite(@PathVariable int userId, @PathVariable String bookId){
 
