@@ -22,14 +22,18 @@ public class Book {
     @Column
     private String author;
 
+    @Column
+    private String thumbnail;
+
     public Book(){
 
     }
 
-    public Book(String id, String author, String title) {
+    public Book(String id, String author, String title, String thumnail) {
         this.author = author;
         this.title = title;
         this.id = id;
+        this.thumbnail = thumnail;
     }
 
     public String getId() {
@@ -50,5 +54,13 @@ public class Book {
 
    public void setAuthor(String author) {
        this.author = author;
+   }
+
+   public String getThumbnail() {
+       return thumbnail;
+   }
+
+   public void setThumbnail(String thumbnail) {
+       this.thumbnail = thumbnail;
    }
 }
