@@ -21,8 +21,6 @@ public class APIController {
     public String APICall(@PathVariable String params, @PathVariable String pageNum) throws Exception {
 
         String output = "";
-        int x = 0;
-        String ret = "";
 
         URL url = new URL("https://www.googleapis.com/books/v1/volumes?q="+params+":&printType=books&startIndex="+(maxBooks*Integer.parseInt(pageNum))+"&maxResults="+maxBooks+"&keyes&key="+APIKey);
         URLConnection yc = url.openConnection();
@@ -32,14 +30,9 @@ public class APIController {
         String inputLine;
 
         while ((inputLine = in.readLine()) != null) 
-            System.out.println(inputLine);
+            //System.out.println(inputLine);
             output += inputLine;
-            x += 1;
-            if (x > 20){
-                ret = inputLine;
-            }
         in.close();
-
-        return ret;
+        return output;
     }
 }
