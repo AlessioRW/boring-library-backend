@@ -114,4 +114,68 @@ class BookControllerTest{
         System.out.println(returnedBook);
         assertEquals(StringUtils.trimAllWhitespace(jsonBook1), StringUtils.trimAllWhitespace(returnedBook));
     }
+
+     @Test
+    void aBookWillBeAddedToTheReadList() throws Exception{
+
+        Users user1 = new Users("alessio", "password");
+        userRepo.save(user1);
+        Book book1 = new Book("123", "shakespeare" ,"the tempest","url");
+        bookRepo.save(book1);
+        Book book2 = new Book("334", "shakespeare" ,"the tempest","url");
+        bookRepo.save(book2);
+
+        MockHttpServletResponse result = this.mockMvc.perform(post("/users/1/123/readList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        MockHttpServletResponse result2 = this.mockMvc.perform(post("/users/1/334/readList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result2.getContentAsString());
+        assertEquals("[\"123\",\"334\"]", result2.getContentAsString());
+    }
+
+    @Test
+    void aBookWillBeRemovedFromTheReadList() throws Exception{
+
+        Users user1 = new Users("alessio", "password");
+        userRepo.save(user1);
+        Book book1 = new Book("123", "shakespeare" ,"the tempest","url");
+        bookRepo.save(book1);
+
+        MockHttpServletResponse result = this.mockMvc.perform(post("/users/1/123/readList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result.getContentAsString());
+        result = this.mockMvc.perform(post("/users/1/123/readList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result.getContentAsString());
+
+        assertEquals("[]", result.getContentAsString());
+    }
+
+    @Test
+    void aBookWillBeAddedToTheWishList() throws Exception{
+
+        Users user1 = new Users("alessio", "password");
+        userRepo.save(user1);
+        Book book1 = new Book("123", "shakespeare" ,"the tempest","url");
+        bookRepo.save(book1);
+        Book book2 = new Book("334", "shakespeare" ,"the tempest","url");
+        bookRepo.save(book2);
+
+        MockHttpServletResponse result = this.mockMvc.perform(post("/users/1/123/wishList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        MockHttpServletResponse result2 = this.mockMvc.perform(post("/users/1/334/wishList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result2.getContentAsString());
+        assertEquals("[\"123\",\"334\"]", result2.getContentAsString());
+    }
+
+    @Test
+    void aBookWillBeRemovedFromTheWishList() throws Exception{
+
+        Users user1 = new Users("alessio", "password");
+        userRepo.save(user1);
+        Book book1 = new Book("123", "shakespeare" ,"the tempest","url");
+        bookRepo.save(book1);
+
+        MockHttpServletResponse result = this.mockMvc.perform(post("/users/1/123/wishList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result.getContentAsString());
+        result = this.mockMvc.perform(post("/users/1/123/wishList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result.getContentAsString());
+
+        assertEquals("[]", result.getContentAsString());
+    }
 }
