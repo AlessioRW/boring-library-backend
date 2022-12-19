@@ -2,6 +2,7 @@ package com.example.boringLibrary.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -105,5 +106,22 @@ public class BookController{
         userRepo.save(user);
 
         return user.getReadList();
+    }
+
+    @GetMapping("/users/{userId}/favourites/{params}")
+    public ArrayList<Book> searchFavs(@PathVariable int userId, @PathVariable String params){
+
+        Users user = userRepo.findById(userId).get();
+        Iterator<Book> allBooks = user.getBooks().iterator();
+
+        ArrayList<Book> matchedBooks = new ArrayList<>();
+        while (allBooks.hasNext()){
+            Book curBook = allBooks.next();
+            System.out.println(curBook.getAuthor() + curBook.getTitle());
+            if (curBook.getAuthor().toLowerCase().contains(params.toLowerCase()) || curBook.getTitle().toLowerCase().contains(params.toLowerCase())){
+                matchedBooks.add(curBook);
+            }
+        }
+        return matchedBooks;
     }
 }
