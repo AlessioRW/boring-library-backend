@@ -1,5 +1,6 @@
 package com.example.boringLibrary.model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -26,6 +27,11 @@ public class Users {
     @Column
     String password;
  
+    @Column
+    ArrayList<String> wishList = new ArrayList<String>(0);
+
+    @Column
+    ArrayList<String> readList = new ArrayList<String>(0);
 
     @ManyToMany
     @JoinTable(name = "users_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "users_id"))
@@ -74,5 +80,17 @@ public class Users {
     }
     public Set<Book> getBooks() {
         return this.books;
+    }
+    public ArrayList<String> getReadList() {
+        return readList;
+    }
+    public void setReadList(ArrayList<String> readList) {
+        this.readList = readList;
+    }
+    public ArrayList<String> getWishList() {
+        return wishList;
+    }
+    public void setWishList(ArrayList<String> wishList) {
+        this.wishList = wishList;
     }
 }

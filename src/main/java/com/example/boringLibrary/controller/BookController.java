@@ -1,5 +1,6 @@
 package com.example.boringLibrary.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,41 @@ public class BookController{
         userRepo.save(user);
 
         return user.getBooks();
+    }
+
+       @PostMapping("/users/{userId}/{bookId}/wishList")
+    public ArrayList<String> toggleWishList (@PathVariable int userId,  @PathVariable String bookId){
+
+        Users user = userRepo.findById(userId).get();
+        ArrayList<String> wishlist = user.getWishList();
+
+        if (wishlist.contains(bookId)){
+            wishlist.remove(bookId);
+        }else{
+            wishlist.add(bookId);
+        }
+
+        user.setWishList(wishlist);
+        userRepo.save(user);
+
+        return user.getWishList();
+    }
+
+    @PostMapping("/users/{userId}/{bookId}/readList")
+    public ArrayList<String> toggleReadList (@PathVariable int userId,  @PathVariable String bookId){
+
+        Users user = userRepo.findById(userId).get();
+        ArrayList<String> readlist = user.getReadList();
+
+        if (readlist.contains(bookId)){
+            readlist.remove(bookId);
+        }else{
+            readlist.add(bookId);
+        }
+
+        user.setReadList(readlist);
+        userRepo.save(user);
+
+        return user.getReadList();
     }
 }
