@@ -178,4 +178,60 @@ class BookControllerTest{
 
         assertEquals("[]", result.getContentAsString());
     }
+
+     @Test
+    void youCanSearchInFavs() throws Exception{
+
+        Users user1 = new Users("alessio", "password");
+        Book book1 = new Book("123", "shakespeare" ,"the tempest","url");
+        bookRepo.save(book1);
+        Book book2 = new Book("334", "historian dude" ,"the impact of shakespeare","url");
+        bookRepo.save(book2);
+        Book book3 = new Book("6w9", "nobody" ,"irrelevant book","url");
+        bookRepo.save(book3);
+        userRepo.save(user1);
+
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String jsonBook1 = ow.writeValueAsString(book1);
+        this.mockMvc.perform(post("/users/1").contentType(MediaType.APPLICATION_JSON_UTF8).content(jsonBook1).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        String jsonBook2 = ow.writeValueAsString(book2);
+        this.mockMvc.perform(post("/users/1").contentType(MediaType.APPLICATION_JSON_UTF8).content(jsonBook2).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        String jsonBook3 = ow.writeValueAsString(book3);
+        this.mockMvc.perform(post("/users/1").contentType(MediaType.APPLICATION_JSON_UTF8).content(jsonBook3).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        MockHttpServletResponse result = this.mockMvc.perform(get("/users/1/favourites/shakespeare").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result.getContentAsString());
+
+        assertEquals("[{\"id\":\"123\",\"title\":\"the tempest\",\"author\":\"shakespeare\",\"thumbnail\":\"url\"},{\"id\":\"334\",\"title\":\"the impact of shakespeare\",\"author\":\"historian dude\",\"thumbnail\":\"url\"}]", result.getContentAsString());
+    }
+
+    @Test
+    void canFetchAUsersWishList() throws Exception {
+
+        Users user1 = new Users("alessio", "password");
+        userRepo.save(user1);
+        Book book1 = new Book("123", "shakespeare", "the tempest", "url");
+        bookRepo.save(book1);
+
+        MockHttpServletResponse result = this.mockMvc.perform(post("/users/1/123/wishList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        result = this.mockMvc.perform(get("/users/get/wishList/1").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result.getContentAsString());
+
+        assertEquals("[\"123\"]", result.getContentAsString());
+    }
+
+    @Test
+    void canFetchAUsersReadList() throws Exception {
+
+        Users user1 = new Users("alessio", "password");
+        userRepo.save(user1);
+        Book book1 = new Book("123", "shakespeare", "the tempest", "url");
+        bookRepo.save(book1);
+
+        MockHttpServletResponse result = this.mockMvc.perform(post("/users/1/123/readList").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        result = this.mockMvc.perform(get("/users/get/readList/1").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result.getContentAsString());
+
+        assertEquals("[\"123\"]", result.getContentAsString());
+    }
 }

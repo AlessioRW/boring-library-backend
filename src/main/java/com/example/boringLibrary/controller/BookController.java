@@ -62,6 +62,26 @@ public class BookController{
         return user.getBooks();
     }
 
+    @GetMapping("/users/get/wishList/{userId}")
+    public ArrayList<String> getWishList (@PathVariable int userId){
+
+        if (userId == -1){
+            return new ArrayList<String>(0);
+        }
+        Users user = userRepo.findById(userId).get();
+        return user.getWishList();
+    }
+
+    @GetMapping("/users/get/readList/{userId}")
+    public ArrayList<String> getReadList (@PathVariable int userId){
+
+        if (userId == -1){
+            return new ArrayList<String>(0);
+        }
+        Users user = userRepo.findById(userId).get();
+        return user.getReadList();
+    }
+
     @DeleteMapping("/users/{userId}/{bookId}")
     public Iterable<Book> removeFavourite(@PathVariable int userId, @PathVariable String bookId){
 
