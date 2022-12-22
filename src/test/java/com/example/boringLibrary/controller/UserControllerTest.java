@@ -5,8 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 @WebMvcTest
 @AutoConfigureDataJpa
 @AutoConfigureMockMvc
-@ExtendWith(MockitoExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class UserControllerTest {
 
@@ -54,7 +51,7 @@ class UserControllerTest {
 
         MockHttpServletResponse result = this.mockMvc.perform(get("/account").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
         System.out.println(result.getContentAsString());
-        assertEquals("[{\"id\":1,\"username\":\"alessio\",\"password\":\"password\",\"books\":[]},{\"id\":2,\"username\":\"Chris\",\"password\":\"password123\",\"books\":[]}]", result.getContentAsString());
+        assertEquals("[{\"id\":1,\"username\":\"alessio\",\"password\":\"password\",\"wishList\":[],\"readList\":[],\"books\":[]},{\"id\":2,\"username\":\"Chris\",\"password\":\"password123\",\"wishList\":[],\"readList\":[],\"books\":[]}]", result.getContentAsString());
     }
 
     @Test
@@ -92,7 +89,7 @@ class UserControllerTest {
         MockHttpServletResponse result2 = this.mockMvc.perform(get("/account").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
         System.out.println(result2.getContentAsString());
 
-        assertEquals("[{\"id\":1,\"username\":\"alessio\",\"password\":\"password\",\"books\":[]}]", result2.getContentAsString());
+        assertEquals("[{\"id\":1,\"username\":\"alessio\",\"password\":\"password\",\"wishList\":[],\"readList\":[],\"books\":[]}]", result2.getContentAsString());
         assertEquals("-1",result1.getContentAsString());
     }
 

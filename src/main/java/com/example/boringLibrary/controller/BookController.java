@@ -92,7 +92,7 @@ public class BookController{
         return user.getBooks();
     }
 
-       @PostMapping("/users/{userId}/{bookId}/wishList")
+    @PostMapping("/users/{userId}/{bookId}/wishList")
     public ArrayList<String> toggleWishList (@PathVariable int userId,  @PathVariable String bookId){
 
         Users user = userRepo.findById(userId).get();

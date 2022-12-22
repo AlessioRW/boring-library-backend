@@ -37,10 +37,7 @@ public class Users {
     @JoinTable(name = "users_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "users_id"))
     Set<Book> books;
 
-    public Users(){
-
-    }
-
+    public Users(){}
     public Users(String username, String password){
         this.username = username;
         this.password = password;
@@ -61,10 +58,10 @@ public class Users {
     public void setUsername(String username) {
         this.username = username;
     }
-
     public void setBooks(Set<Book> books) {
         this.books = books;
     }
+    
     public void addBook(Book newBook){
         this.books.add(newBook);
     }
