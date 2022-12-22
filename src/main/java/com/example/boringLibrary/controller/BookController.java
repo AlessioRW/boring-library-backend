@@ -131,6 +131,10 @@ public class BookController{
     @GetMapping("/users/{userId}/favourites/{params}")
     public ArrayList<Book> searchFavs(@PathVariable int userId, @PathVariable String params){
 
+        if (userId == -1){
+            return new ArrayList<Book>(0);
+        }
+
         Users user = userRepo.findById(userId).get();
         Iterator<Book> allBooks = user.getBooks().iterator();
 

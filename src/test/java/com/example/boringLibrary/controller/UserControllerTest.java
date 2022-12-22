@@ -118,4 +118,14 @@ class UserControllerTest {
         System.out.println(result.getContentAsString());
         assertEquals("-1", result.getContentAsString());
     }
+
+    @Test
+    void getUserProfile() throws Exception{
+        Users user1 = new Users("alessio", "password");
+        userRepo.save(user1);
+
+        MockHttpServletResponse result = this.mockMvc.perform(get("/account/1").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        System.out.println(result.getContentAsString());
+        assertEquals("{\"id\":1,\"username\":\"alessio\",\"password\":\"password\",\"wishList\":[],\"readList\":[],\"books\":[]}", result.getContentAsString());
+    }
 }
