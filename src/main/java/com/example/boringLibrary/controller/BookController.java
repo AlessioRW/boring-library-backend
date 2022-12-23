@@ -141,7 +141,6 @@ public class BookController{
         ArrayList<Book> matchedBooks = new ArrayList<>();
         while (allBooks.hasNext()){
             Book curBook = allBooks.next();
-            System.out.println(curBook.getAuthor() + curBook.getTitle());
             if (curBook.getAuthor().toLowerCase().contains(params.toLowerCase()) || curBook.getTitle().toLowerCase().contains(params.toLowerCase())){
                 matchedBooks.add(curBook);
             }
